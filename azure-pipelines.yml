@@ -9,17 +9,37 @@ pool:
 steps:
 - task: Xcode@5
   inputs:
-    scheme: ''
+    #scheme: ''
+    #sdk: 'iphoneos'
+    #configuration: 'Release'
+    #xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
+    #packageApp: true
+
+    actions: 'clean build analyze archive'
+    scheme: 'iOSHelloWorld'
     sdk: 'iphoneos'
     configuration: 'Release'
-    xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
-    packageApp: true
-- task: CopyFiles@2
+    xcodeVersion: 'default'
+    args: '-archivePath $(agent.buildDirectory)/iOSHelloWorld'
+
+#- task: CopyFiles@2
+#  inputs:
+#    contents: '**/*.ipa'
+#    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: ArchiveFiles@2
+  displayName: 'Package .xcarchive into a zip file'
   inputs:
-    contents: '**/*.ipa'
-    targetFolder: '$(build.artifactStagingDirectory)'
+    rootFolderOrFile: '$(agent.buildDirectory)/iOSHelloWorld.xcarchive/'
+    archiveFile: '$(build.artifactStagingDirectory)/iOSHelloWorld.xcarchive.zip'
+
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    pathToPublish: $(Build.ArtifactStagingDirectory)
+#    artifactName: iOSArtefatoArroxaDoido.ipa
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: iOSArtefatoArroxaDoido.ipa
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/iOSHelloWorld.xcarchive.zip'
+    artifactName: 'xcarchive-files'
+    artifactType: 'container'
