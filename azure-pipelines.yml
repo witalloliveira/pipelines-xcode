@@ -15,9 +15,9 @@ steps:
     xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
 - task: CopyFiles@2
   inputs:
-    contents: '_buildOutput/**'
+    contents: '*/*.app'
     targetFolder: $(Build.ArtifactStagingDirectory)
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: MyBuildOutputs
+    artifactName: ArtefatoArroxaDoido.app
