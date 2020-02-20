@@ -13,6 +13,7 @@ steps:
     sdk: 'iphoneos'
     configuration: 'Release'
     xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
+    packageApp: true
 - task: CopyFiles@2
   inputs:
     contents: '**/*.ipa'
